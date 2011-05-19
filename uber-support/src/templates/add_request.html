@@ -1,0 +1,97 @@
+{% extends '_main_template.html' %}
+
+{% block title %}Create Request{% endblock %}
+
+{% block content %}
+
+<form method='post' action='/request/add'>
+	<fieldset>
+		<legend>Create new request</legend>
+		
+		<label for='editEmail'>Email address</label>
+
+		{% if not is_logged_in %}
+
+		<input type='text' id='editEmail' name='email' />
+		
+		{% else %}
+		
+		<span>{{ requestor.email }}</span>
+		
+		{% endif %}
+		
+		<br/>
+		
+		<label for='listCategories'>Category</label>
+		<select id='listCategories' name='category'>
+			<option>Hardware</option>
+			<option>Software</option>
+			<option>Other</option>
+		</select>
+		<br/>
+		
+		<label for='editSubject'>Subject</label>
+		<input type='text' id='editSubject' name='subject' />
+		<br/>
+		
+		<label for='editNotes'>Notes</label>
+		<textarea id='editNotes' rows='6' cols='40' name='notes'></textarea>
+		<br/>
+		<br/>
+		
+		{% if is_logged_in %}
+		
+		<label for='editName'>Your Name</label>
+		<span>{{ requestor.name }}</span>
+		<br/>
+		
+		<label for='editPhone'>Your Phone</label>
+		<span>{{ requestor.phone }}</span>
+		<br/>
+		
+		<label for='editCompany'>Your Company</label>
+		<span>{{ requestor.company }}</span>
+		<br/>
+
+		{% else %}
+
+		<label for='editName'>Your Name</label>
+		<input type='text' id='editName'  name='name'/>
+		<br/>
+		
+		<label for='editPhone'>Your Phone</label>
+		<input type='text' id='editPhone'  name='phone' />
+		<br/>
+		
+		<label for='editCompany'>Your Company</label>
+		<input type='text' id='editCompany'  name='company'' />
+		<br/>
+		
+		{% endif %}
+		
+		<input type='submit' value='Create' />
+		
+	</fieldset>
+</form>
+
+<div id='requests_list'>Loading...</div>
+<script>
+function verifyRequest() {
+	var email = $('#email')
+	
+}
+
+
+function loadRequestsList() {
+	$.ajax({
+		url: '/request/list',
+		cache: false,
+		success: function(html) {
+			$("#requests_list").html(html);
+		}
+	});
+}
+loadRequestsList();
+</script>
+
+{% endblock %}
