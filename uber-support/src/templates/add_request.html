@@ -4,22 +4,38 @@
 
 {% block content %}
 
+<script>
+function changeRequestor() {
+	var email = $('#editEmail').val()
+	
+	$.getJSON('/async?op=retrieve_requestor&email=' + email, function(requestor) {
+			loadRequestsList(email);
+			$('#editEmail').attr('disabled', true);
+			$('#editName').val(requestor.name).attr('disabled', true);
+			$('#editPhone').val(requestor.phone).attr('disabled', true);
+			$('#editCompany').val(requestor.company).attr('disabled', true);
+		});
+}
+
+
+function loadRequestsList(email) {
+	$.ajax({
+		url: '/async?op=list_requests&email=' + email,
+		cache: false,
+		success: function(html) {
+			$("#requests_list").html(html);
+		}
+	});
+}
+
+</script>
+
 <form method='post' action='/request/add'>
 	<fieldset>
 		<legend>Create new request</legend>
 		
 		<label for='editEmail'>Email address</label>
-
-		{% if not is_logged_in %}
-
-		<input type='text' id='editEmail' name='email' />
-		
-		{% else %}
-		
-		<span>{{ requestor.email }}</span>
-		
-		{% endif %}
-		
+		<input type='text' id='editEmail' name='email'  onblur="changeRequestor()"/>
 		<br/>
 		
 		<label for='listCategories'>Category</label>
@@ -39,22 +55,6 @@
 		<br/>
 		<br/>
 		
-		{% if is_logged_in %}
-		
-		<label for='editName'>Your Name</label>
-		<span>{{ requestor.name }}</span>
-		<br/>
-		
-		<label for='editPhone'>Your Phone</label>
-		<span>{{ requestor.phone }}</span>
-		<br/>
-		
-		<label for='editCompany'>Your Company</label>
-		<span>{{ requestor.company }}</span>
-		<br/>
-
-		{% else %}
-
 		<label for='editName'>Your Name</label>
 		<input type='text' id='editName'  name='name'/>
 		<br/>
@@ -67,31 +67,11 @@
 		<input type='text' id='editCompany'  name='company'' />
 		<br/>
 		
-		{% endif %}
-		
 		<input type='submit' value='Create' />
 		
 	</fieldset>
 </form>
 
 <div id='requests_list'>Loading...</div>
-<script>
-function verifyRequest() {
-	var email = $('#email')
-	
-}
-
-
-function loadRequestsList() {
-	$.ajax({
-		url: '/request/list',
-		cache: false,
-		success: function(html) {
-			$("#requests_list").html(html);
-		}
-	});
-}
-loadRequestsList();
-</script>
 
 {% endblock %}

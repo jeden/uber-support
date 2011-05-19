@@ -4,7 +4,7 @@ Created on May 14, 2011
 @author: Antonio Bello - Elapsus
 '''
 from model.requestor_entity import RequestorEntity
-from model.model_utils import DuplicatedEntityException
+from model import DuplicatedEntityException
 
 class RequestorManager:
     def __init__(self, email):

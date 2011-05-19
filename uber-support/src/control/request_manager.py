@@ -18,7 +18,7 @@ class RequestManager:
         request.put()
         return request
 
-    def list_requests(self):
+    def list_requests(self, requestor):
         """ Retrieve the requests created by the specified user """
         query = db.Query(RequestEntity).filter('requestor', self._requestor_key)
         return query.fetch(limit = 20)
