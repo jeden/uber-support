@@ -7,14 +7,34 @@
 <script>
 function changeRequestor() {
 	var email = $('#editEmail').val()
-	
+
 	$.getJSON('/async?op=retrieve_requestor&email=' + email, function(requestor) {
-			loadRequestsList(email);
 			$('#editEmail').attr('disabled', true);
 			$('#editName').val(requestor.name).attr('disabled', true);
 			$('#editPhone').val(requestor.phone).attr('disabled', true);
 			$('#editCompany').val(requestor.company).attr('disabled', true);
 		});
+	
+	$('#tblRequests').jqGrid({
+		url: '/async?op=list_requests&email=' + email,
+		datatype: 'json',
+		colNames: ['Category', 'Subject', 'Submitted On'],
+		colModel: [
+			{name: 'category'},
+			{name: 'subject'},
+			{name: 'submitted_on'}
+		],
+		rowNum: 10,
+		rowList: [10,20,30],
+		pager: '#divRequestsPager',
+		sortname: 'submitted_on',
+		viewrecords: true,
+		sortorder: 'desc',
+		caption: 'User Requests',
+		jsonReader: {
+			repeatitems: false
+		}
+	});
 }
 
 
@@ -72,6 +92,8 @@ function loadRequestsList(email) {
 	</fieldset>
 </form>
 
-<div id='requests_list'>Loading...</div>
+<table id="tblRequests"></table>
+<div id="divRequestsPager"></div>
+
 
 {% endblock %}
