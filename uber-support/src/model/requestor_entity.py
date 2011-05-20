@@ -16,3 +16,6 @@ class RequestorEntity(DbModel):
     def create(cls, email, name, phone, company):
         RequestorEntity.check_for_uniqueness("email", email)
         return cls(email = email, name = name, phone = phone, company = company)
+    
+    def __repr__(self):
+        return self.name
