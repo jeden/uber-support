@@ -17,9 +17,10 @@ class AsyncHandler(webapp.RequestHandler):
         return self.__handleRequest()
         
     def __handleRequest(self):
-        routing_table = {'list_requests':                         [ListRequestsCommand, {'email': self.request.get('email')}],
-                                'retrieve_requestor':               [RetrieveRequestor, {'email': self.request.get('email')}]
-                         }
+        routing_table = {
+                         'list_requests': [ListRequestsCommand, {'email': self.request.get('email')}],
+                         'retrieve_requestor': [RetrieveRequestor, {'email': self.request.get('email')}]
+                    }
         
         op = self.request.get('op')
         if op is not None and routing_table.has_key(op):

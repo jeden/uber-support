@@ -14,7 +14,7 @@ class ListRequestsCommand(CommandBase):
         email = self.parameters['email']
         requestor_manager = RequestorManager(email)
         request_manager = RequestManager(requestor_manager.get_requestor().key())
-        requests = request_manager.list_requests(requestor_manager.get_requestor())
+        requests = request_manager.list_requests()
         json = self.jsonize_jqgrid(requests)
         return self.render_content(json)
         
