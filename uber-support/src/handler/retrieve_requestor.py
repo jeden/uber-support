@@ -6,7 +6,7 @@ Created on May 19, 2011
 from handler.command import CommandBase
 from control.requestor_manager import RequestorManager
 
-class RetrieveRequestor(CommandBase):
+class RetrieveRequestorCommand(CommandBase):
     def _execute(self):
         email = self.parameters['email']
         if (email is not None):

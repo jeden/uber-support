@@ -3,9 +3,9 @@ Created on May 19, 2011
 
 @author: Antonio Bello - Elapsus
 '''
-from utils import doRender
 import simplejson
 import types
+from utils.template import render_template
 
 class CommandBase:
     """ Base class for async commands """
@@ -45,7 +45,7 @@ class CommandBase:
 
     def render_template(self, template, parameters):
         """ Render from template """
-        return doRender(self.__handler, template, parameters)
+        return render_template(self.__handler, template, parameters)
     
     def render_content(self, content):
         self.__handler.response.out.write(content)

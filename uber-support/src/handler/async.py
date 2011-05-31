@@ -5,7 +5,7 @@ Created on May 19, 2011
 '''
 from google.appengine.ext import webapp
 from handler.list_requests import ListRequestsCommand
-from handler.retrieve_requestor import RetrieveRequestor
+from handler.retrieve_requestor import RetrieveRequestorCommand
 
 class AsyncHandler(webapp.RequestHandler):
     """ Handler for asynchronous requests """
@@ -19,7 +19,7 @@ class AsyncHandler(webapp.RequestHandler):
     def __handleRequest(self):
         routing_table = {
                          'list_requests': [ListRequestsCommand, {'email': self.request.get('email')}],
-                         'retrieve_requestor': [RetrieveRequestor, {'email': self.request.get('email')}]
+                         'retrieve_requestor': [RetrieveRequestorCommand, {'email': self.request.get('email')}]
                     }
         
         op = self.request.get('op')

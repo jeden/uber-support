@@ -8,7 +8,7 @@
 function changeRequestor() {
 	var email = $('#id_email').val()
 
-	$.getJSON('/async?op=retrieve_requestor&email=' + email, function(requestor) {
+	$.getJSON('/req/async?op=retrieve_requestor&email=' + email, function(requestor) {
 		if (requestor != null) {
 			$('#id_email').attr('readonly', true).addClass('disabled');
 			$('#id_name').val(requestor.name).attr('readonly', true).addClass('disabled');
@@ -47,7 +47,7 @@ function changeRequestor() {
 
 function loadRequestsList(email) {
 	$.ajax({
-		url: '/async?op=list_requests&email=' + email,
+		url: '/req/async?op=list_requests&email=' + email,
 		cache: false,
 		success: function(html) {
 			$("#requests_list").html(html);
@@ -77,7 +77,7 @@ $(document).ready(function() {
 });
 </script>
 
-<form method='post' action='/request/add'>
+<form method='post' action='/req/request/add'>
 	<fieldset>
 		<legend>Create new request</legend>
 		

@@ -7,6 +7,14 @@ handlers:
 - url: /static
   static_dir: static
   
+- url: /req/.*
+  script: main_requestor.py
+  #login: required
+ 
+- url: /res/.*
+  script: main_responder.py
+  login: required
+ 
 - url: /.*
   script: index.py
   

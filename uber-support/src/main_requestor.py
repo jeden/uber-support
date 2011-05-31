@@ -1,30 +1,22 @@
 '''
-Created on May 17, 2011
+Created on May 31, 2011
 
-@author: jeden
+@author: Antonio Bello - Elapsus
 '''
-
 from google.appengine.dist import use_library
 use_library('django', '1.2')
 
 
-
-
-from google.appengine.ext import webapp
-import wsgiref
+from index import MainHandler
 from handler.async import AsyncHandler
 from handler.add_request import AddRequestHandler
-from utils.template import render_template
-
-class MainHandler(webapp.RequestHandler):
-    def get(self):
-        if not render_template(self, self.request.path):
-            render_template(self)
+from google.appengine.ext import webapp
+import wsgiref
 
 def main():
     application = webapp.WSGIApplication([
-                                          ('/request/add', AddRequestHandler),
-                                          ('/async', AsyncHandler),
+                                          ('/req/request/add', AddRequestHandler),
+                                          ('/req/async', AsyncHandler),
                                           ('/.*', MainHandler)],
                                          debug = True)
     wsgiref.handlers.CGIHandler().run(application)

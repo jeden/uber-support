@@ -4,11 +4,11 @@ Created on May 20, 2011
 @author: Antonio Bello - Elapsus
 '''
 from google.appengine.ext import webapp
-from control.requestor_manager import RequestorManager
-from control.request_manager import RequestManager
-from handler import Session
 from django import forms
-from utils import doRender
+from handler import Session
+from control.request_manager import RequestManager
+from control.requestor_manager import RequestorManager
+from utils.template import render_template
 
 class RequestForm(forms.Form):
     email = forms.EmailField(label='Email address')
@@ -30,9 +30,9 @@ class AddRequestHandler(webapp.RequestHandler):
 
     def __init__(self):
         self.__session = Session()
-
+        
     def get(self, form = RequestForm()):
-        doRender(self, 'add_request.html', {
+        render_template(self, 'add_request.html', {
                                             'form': form,
                                             'requestor': self.__session.get_requestor(),
                                             'is_logged_in': self.__session.is_logged_in()})
