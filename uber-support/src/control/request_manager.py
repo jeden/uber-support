@@ -7,7 +7,14 @@ from model.request_entity import RequestEntity, RequestCategoryEntity
 from google.appengine.ext import db
 
 class RequestManager:
-    """ Create, update, delete and list requests """
+    """ Requests management for both requestor and responder """
+    @classmethod
+    def list_categories(cls):
+        """ Return the list of request categories """
+        return RequestCategoryEntity.all().fetch(100)
+
+class RequestorRequestManager:
+    """ Create, update, delete, list and manage requests for a requestor """
     
     def __init__(self, requestor_key):
         self._requestor_key = requestor_key
@@ -23,8 +30,7 @@ class RequestManager:
         query = db.Query(RequestEntity).filter('requestor', self._requestor_key)
         return query.fetch(limit = 20)
         
-    @classmethod
-    def list_categories(cls):
-        """ Return the list of request categories """
-        return RequestCategoryEntity.all().fetch(100)
-        
+class ResponderRequestManager:
+    def list_requests(self):
+        """ Retrieve the list of requests """
+        return RequestEntity.all().fetch(1000);

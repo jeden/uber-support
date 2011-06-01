@@ -8,7 +8,7 @@ use_library('django', '1.2')
 
 
 from index import MainHandler
-from handler.async import AsyncHandler
+from handler.async import RequestorAsyncHandler
 from handler.add_request import AddRequestHandler
 from google.appengine.ext import webapp
 import wsgiref
@@ -16,7 +16,7 @@ import wsgiref
 def main():
     application = webapp.WSGIApplication([
                                           ('/req/request/add', AddRequestHandler),
-                                          ('/req/async', AsyncHandler),
+                                          ('/req/async', RequestorAsyncHandler),
                                           ('/.*', MainHandler)],
                                          debug = True)
     wsgiref.handlers.CGIHandler().run(application)

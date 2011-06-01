@@ -5,6 +5,9 @@ Created on May 17, 2011
 '''
 from model import DbModel
 from google.appengine.ext import db
+from utils.enum import Enum
+
+RequestStatus = Enum(['OPEN'])
 
 class RequestCategoryEntity(DbModel):
     category = db.StringProperty(required = True)
@@ -18,6 +21,7 @@ class RequestEntity(DbModel):
     subject = db.StringProperty(required = True)
     notes = db.TextProperty(required = True)
     submitted_on = db.DateTimeProperty(auto_now = True)
+    status = db.StringProperty(required = True, choices = RequestStatus, default = RequestStatus.OPEN)
     
     @classmethod
     def create(cls, requestor, category_id, subject, notes):

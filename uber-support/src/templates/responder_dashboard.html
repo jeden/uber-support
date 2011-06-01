@@ -1,0 +1,37 @@
+{% extends '_main_template.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block head %}
+<script type='text/javascript' src='/static/js/dashboard_loader.js'></script>
+{% endblock %}
+
+
+{% block content %}
+
+<script language="javascript">
+$(document).ready(function() {
+	loadDashboard('Unassigned requests', '#tblDashboard1', '#divPager1')
+	loadDashboard('Open requests', '#tblDashboard2', '#divPager2')
+	loadDashboard('Closed requests', '#tblDashboard3', '#divPager3')
+})
+</script>
+
+<table width="100%">
+	<tr>
+		<td width="33%">
+			<table id='tblDashboard1'></table>
+			<div id="divPager1"></div>
+		</td>
+		<td width="33%">
+			<table id='tblDashboard2'></table>
+			<div id="divPager2"></div>
+		</td>
+		<td width="33%">
+			<table id='tblDashboard3'></table>
+			<div id="divPager3"></div>
+		</td>
+	</tr>
+</table>
+
+{% endblock %}

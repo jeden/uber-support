@@ -11,6 +11,7 @@ class RequestorEntity(DbModel):
     name = db.StringProperty(required = True)
     phone = db.PhoneNumberProperty(required = True)
     company = db.StringProperty(required = True)
+    rank = db.IntegerProperty(required = True, default = 999998)
     
     @classmethod
     def create(cls, email, name, phone, company):

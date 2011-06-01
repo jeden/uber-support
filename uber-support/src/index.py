@@ -12,8 +12,6 @@ use_library('django', '1.2')
 
 from google.appengine.ext import webapp
 import wsgiref
-from handler.async import AsyncHandler
-from handler.add_request import AddRequestHandler
 from utils.template import render_template
 
 class MainHandler(webapp.RequestHandler):
@@ -23,8 +21,6 @@ class MainHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-                                          ('/request/add', AddRequestHandler),
-                                          ('/async', AsyncHandler),
                                           ('/.*', MainHandler)],
                                          debug = True)
     wsgiref.handlers.CGIHandler().run(application)

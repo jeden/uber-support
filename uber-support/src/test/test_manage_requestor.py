@@ -7,12 +7,10 @@ Created on May 14, 2011
 from control.requestor_manager import RequestorManager, RequestorException
 from model.requestor_entity import RequestorEntity
 from test.test_base_appengine_datastore_tester import BaseAppengineDatastoreTester
+from test import helpers
 
 class Test_ManageRequestor(BaseAppengineDatastoreTester):
     """ Requestor management tests"""
-    
-    def setUp(self):
-        BaseAppengineDatastoreTester.setUp(self)
     
     def test_create_requestor(self):
         """ Create a new requestor and verify it is correctly stored """
@@ -41,22 +39,15 @@ class Test_ManageRequestor(BaseAppengineDatastoreTester):
         
     def test_create_duplicated_requestor(self):
         """ Verify that a new requestor with an existing email cannot be created """
-        self._create_dummy_requestor(1)
+        helpers.create_dummy_requestor(1)
         
         try:
-            self._create_dummy_requestor(1)
+            helpers.create_dummy_requestor(1)
             self.fail('Created duplicated requestor')
         except(RequestorException):
             pass
-        
-    def _create_dummy_requestor(self, index):
-        requestor_manager = RequestorManager(email = 'requestor_%i@email.com' % index)
 
-        # Create the requestor
-        requestor_manager.create_requestor(
-                    name = 'First, Last',
-                    phone = '555-405-7685',
-                    company = 'My Company, Inc'
-                )
-        
-        return requestor_manager
+    def test_verify_default_rank_on_requestor_creation(self):
+        """ Verify that default rank is 999998 """
+        requestor_manager = helpers.create_dummy_requestor(1)
+        self.assertEqual(requestor_manager.get_requestor().rank, 999998)

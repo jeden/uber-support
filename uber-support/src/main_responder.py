@@ -3,9 +3,26 @@ Created on May 31, 2011
 
 @author: Antonio Bello - Elapsus
 '''
+
 from google.appengine.dist import use_library
 use_library('django', '1.2')
 
 
-class RequestorHandler:
-    pass
+from index import MainHandler
+from handler.dashboard_handler import DashboardHandler
+from handler.async import ResponderAsyncHandler
+
+from google.appengine.ext import webapp
+import wsgiref
+
+
+def main():
+    application = webapp.WSGIApplication([
+                                          ('/res/dashboard', DashboardHandler),
+                                          ('/res/async', ResponderAsyncHandler),
+                                          ('/.*', MainHandler)],
+                                         debug = True)
+    wsgiref.handlers.CGIHandler().run(application)
+    
+if __name__ == '__main__':
+    main()

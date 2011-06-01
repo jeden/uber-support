@@ -19,7 +19,7 @@ function changeRequestor() {
 			$('#divRequests').show();
 
 			$('#tblRequests').jqGrid({
-				url: '/async?op=list_requests&email=' + email,
+				url: '/req/async?op=list_requests&email=' + email,
 				datatype: 'json',
 				autowidth: true,
 				colNames: ['Requestor', 'Category', 'Subject', 'Submitted On'],
