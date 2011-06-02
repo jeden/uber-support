@@ -12,27 +12,30 @@ def get_request_category():
 
 def create_dummy_request_categories():
     """ Create dummies request categories """
-    category = RequestCategoryEntity(category = 'hardware')
-    category.put()
+    category_1 = RequestCategoryEntity(category = 'hardware')
+    category_1.put()
 
-    category = RequestCategoryEntity(category = 'software')
-    category.put()
+    category_2 = RequestCategoryEntity(category = 'software')
+    category_2.put()
+    
+    return (category_1, category_2)
 
 def create_dummy_requestor(index):
     requestor_manager = RequestorManager(email = 'requestor_%i@email.com' % index)
 
     # Create the requestor
     requestor_manager.create_requestor(
-                name = 'First, Last',
+                name = 'First%i, Last' % index,
                 phone = '555-405-7685',
                 company = 'My Company, Inc'
             )
     
     return requestor_manager
     
-def create_dummy_request(request_manager, index, count = 1):
+def create_dummy_request(request_manager, index, count = 1, category = None):
     """ Create one or more dummy requests """
-    category = get_request_category()
+    if category is None:
+        category = get_request_category()
     
     if count == 1:
         return request_manager.create_request(

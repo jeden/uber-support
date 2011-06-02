@@ -11,14 +11,14 @@
 
 <script language="javascript">
 $(document).ready(function() {
-	loadDashboard('Unassigned requests', '#tblDashboard1', '#divPager1')
-	loadDashboard('Open requests', '#tblDashboard2', '#divPager2')
-	loadDashboard('Closed requests', '#tblDashboard3', '#divPager3')
+	loadDashboard('Unassigned requests', '#tblDashboard1', '#divPager1', 'UNASSIGNED')
+	loadDashboard('Open requests', '#tblDashboard2', '#divPager2', 'OPEN')
+	loadDashboard('Closed requests', '#tblDashboard3', '#divPager3', 'CLOSED')
 })
 </script>
 
 <table width="100%">
-	<tr>
+	<tr valign="top">
 		<td width="33%">
 			<table id='tblDashboard1'></table>
 			<div id="divPager1"></div>

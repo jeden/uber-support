@@ -6,7 +6,7 @@ Created on May 20, 2011
 from google.appengine.ext import webapp
 from django import forms
 from handler import Session
-from control.request_manager import RequestManager
+from control.request_manager import RequestManager, RequestorRequestManager
 from control.requestor_manager import RequestorManager
 from utils.template import render_template
 
@@ -58,7 +58,7 @@ class AddRequestHandler(webapp.RequestHandler):
                 self.__session.register_login(email)
                 self.__session.set_requestor(requestor_manager.get_requestor())
             
-            request_manager = RequestManager(requestor_manager.get_requestor())
+            request_manager = RequestorRequestManager(requestor_manager.get_requestor())
             request_manager.create_request(category, subject, notes)
 
         self.get(form = form)

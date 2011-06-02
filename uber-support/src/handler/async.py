@@ -44,6 +44,10 @@ class RequestorAsyncHandler(AsyncHandller):
 class ResponderAsyncHandler(AsyncHandller):
     def _get_routing_table(self):
         return {
-                'loadDashboard': [ListResponderRequestsCommand, {}]
+                'loadDashboard': [ListResponderRequestsCommand, {
+                                                                 'status': self.request.get('status'),
+                                                                 'sort_by': self.request.get('sidx'),
+                                                                 'sort_desc': self.request.get('sord') == 'desc'
+                                                            }]
                 }
     

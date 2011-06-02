@@ -5,6 +5,9 @@ Created on May 14, 2011
 '''
 from model.request_entity import RequestEntity, RequestCategoryEntity
 from google.appengine.ext import db
+from utils.enum import Enum
+
+RequestSortOrder = Enum( [ 'REQUESTOR', 'RANK', 'CATEGORY', 'SUBMITTED_ON' ] )
 
 class RequestManager:
     """ Requests management for both requestor and responder """
@@ -31,6 +34,31 @@ class RequestorRequestManager:
         return query.fetch(limit = 20)
         
 class ResponderRequestManager:
-    def list_requests(self):
-        """ Retrieve the list of requests """
-        return RequestEntity.all().fetch(1000);
+    def list_requests(self, status, sort_by = None, sort_descending = None):
+        """ 
+            Retrieve the list of requests
+            
+            PARAMETERS:
+            * status: filter requests by status 
+        """
+
+        query = RequestEntity.all().filter('status =', status)
+        sign = sort_descending and '-' or ''
+        
+        if sort_descending is None:
+            sort_descending = False
+        
+        if sort_by == RequestSortOrder.REQUESTOR:
+            requests = query.order('%srequestor' % sign).fetch(1000)
+        elif sort_by == RequestSortOrder.RANK:
+            requests = query.fetch(1000)
+            requests.sort(key = lambda request: request.requestor.rank, reverse = sort_descending)
+        elif sort_by == RequestSortOrder.CATEGORY:
+            requests = query.fetch(1000)
+            requests.sort(key = lambda request: request.category.category, reverse = sort_descending)
+        elif sort_by == RequestSortOrder.SUBMITTED_ON:
+            requests = query.order('%ssubmitted_on' % sign).fetch(1000)
+        else:
+            requests = query.fetch(1000)
+        
+        return requests

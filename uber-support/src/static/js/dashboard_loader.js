@@ -1,13 +1,14 @@
-function loadDashboard(caption, tableId, pagerId) {
-	$(tableId).jqGrid({
-		url: '/res/async?op=loadDashboard',
+function loadDashboard(caption, tableId, pagerId, status) {
+	var table = $(tableId)
+	table.jqGrid({
+		url: '/res/async?op=loadDashboard&status=' + status,
 		datatype: 'json',
 		colNames: ['Requestor', 'Open time', 'Category', 'Subject'],
 		colModel: [
 		           {name: 'requestor'},
-		           {name: 'submitted_on', formatter: 'date', formatoptions: {srcformat:'ISO8601Long', newformat: 'ShortDate'}},
+		           {name: 'submitted_on', align: 'center', formatter: 'date', formatoptions: {srcformat:'ISO8601Long', newformat: 'ShortDate'}},
 		           {name: 'category'},
-		           {name: 'subject'}
+		           {name: 'subject', sortable: false}
 		],
 		rowNum: 25,
 		rowList: [25, 50, 100],
@@ -20,5 +21,12 @@ function loadDashboard(caption, tableId, pagerId) {
 		jsonReader: {
 			repeatitems: false
 		},
+		toolbar: [true, 'top'],
 	})
+	
+	table.before("<a href='#' onclick=\"$('" + tableId + "').setGridParam({sortname: 'rank'}).trigger('reloadGrid')\">Sort by rank</a>");
+}
+
+function sortDashboard(tableId, column) {
+	$(tableId).sortGrid(column, true);
 }
