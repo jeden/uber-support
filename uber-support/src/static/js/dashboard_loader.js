@@ -21,6 +21,7 @@ function loadDashboard(caption, tableId, pagerId, status) {
 		jsonReader: {
 			repeatitems: false
 		},
+		onSelectRow: function(rowid, status) { viewRequest('#dialog', rowid); },
 		toolbar: [true, 'top'],
 	})
 	
@@ -29,4 +30,30 @@ function loadDashboard(caption, tableId, pagerId, status) {
 
 function sortDashboard(tableId, column) {
 	$(tableId).sortGrid(column, true);
+}
+
+function viewRequest(dialogId, requestId) {
+	if (requestId) {
+		$(dialogId).dialog({
+			autoOpen: false,
+			minHeight: 300,
+			minWidth: 500,
+			modal: true,
+			title: 'View Request',
+			open: function(event, ui) {
+				$.ajax({
+					url: '/res/async/request/view/id/' + requestId,
+					cache: false,
+					success: function(html) {
+						$(dialogId).html(html);
+					}
+				});
+			},
+			close: function(event, ui) {
+				$(dialogId).html('Loading...');
+			}
+		});
+		
+		$(dialogId).dialog('open');
+	}
 }

@@ -1,10 +1,11 @@
 body {
-	background-color: #FCFCFC;
+	background-color: #FBFFFB;
+	font-family: sans-serif, verdana;
 }
 
 fieldset {
 	padding: 1em;
-	font: 80%/1 sans-serif;
+	font-size: 80%;
 	border: none;
 }
 
@@ -16,14 +17,34 @@ fieldset legend {
 	width: 100%;
 }
 
-fieldset label {
+fieldset label, div.panel label {
 	float: left;
 	width: 15%;
-	margin-right: 0.5em;
+	min-width: 120px;
+	margin-right: 1em;
 	padding-top: 0.4em;
 	text-align: right;
 	font-weight: bold;
-	color: #444;
+	color: #888;
+}
+
+div.panel {
+	font-size: 80%;
+}
+
+div.field {
+	/*'border: 1px solid red;*/
+	padding: .6em 0;
+}
+
+div.field label {
+	padding-top: 0
+}
+
+div.field span {
+	padding: 0.2em 0.4em;
+	color: black;
+	border: 1px inset;
 }
 
 .disabled {

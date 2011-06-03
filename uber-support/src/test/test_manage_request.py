@@ -231,6 +231,16 @@ class Test_ManageResponderRequests(BaseAppengineDatastoreTester):
         self.assertLess(requests[3].submitted_on, requests[4].submitted_on) 
         self.assertLess(requests[4].submitted_on, requests[5].submitted_on) 
         self.assertLess(requests[5].submitted_on, requests[6].submitted_on) 
+
+    def test_find_by_id(self):
+        ''' Test the find by id method to retrieve a request '''
+        
+        requests = self._request_manager.list_requests(RequestStatus.UNASSIGNED)
+        id = requests[6].key().id()
+        
+        request = self._request_manager.find_request(id)
+        self.verify_entity_instance(request, RequestEntity)
+        self.assertEqual(request.key(), requests[6].key())
         
 
 class Test_ManageRequests(BaseAppengineDatastoreTester):

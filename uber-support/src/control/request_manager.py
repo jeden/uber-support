@@ -62,3 +62,9 @@ class ResponderRequestManager:
             requests = query.fetch(1000)
         
         return requests
+
+    def find_request(self, id):
+        ''' Find a request by its id '''
+        id = int(id)
+        
+        return RequestEntity.get_by_id(id)

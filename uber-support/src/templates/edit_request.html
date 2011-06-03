@@ -1,0 +1,35 @@
+{% extends '_main_template.html' %}
+
+{% block title %}Create Request{% endblock %}
+
+{% block content %}
+
+<script>
+$(document).ready(function() {
+	$.ajax({
+		url: '/res/async/request/view/id/{{ request_id }}',
+		cache: false,
+		success: function(html) {
+			$('#view_request').html(html);
+		}
+	});
+});
+</script>
+
+<div id='view_request'></div>
+
+<form method='post'>
+	<fieldset>
+		<legend>Edit new request</legend>
+		
+		
+		{% with request_form as form %} 
+			{% include '_form_template.html' %}
+		{% endwith %}
+		
+		<input type='submit' value='Update' />
+		
+	</fieldset>
+</form>
+
+{% endblock %}

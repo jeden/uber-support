@@ -73,5 +73,5 @@ class CommandBase:
     def __add_key(self, entity):
         """ Convert an entity to a dictionary containing all properties, plus the string version of the entity key """
         map = entity.to_dict()
-        map['id'] = str(entity.key())
+        map['id'] = str(entity.key().id())
         return map

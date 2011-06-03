@@ -35,6 +35,7 @@ class ListResponderRequestsCommand(CommandBase):
         
         request_manager = ResponderRequestManager()
         requests = request_manager.list_requests(status = status, sort_by = sort_order, sort_descending = sort_descending)
+        
         json = self.jsonize_jqgrid(requests)
         return self.render_content(json)
         

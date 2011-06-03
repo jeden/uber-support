@@ -22,8 +22,9 @@ function changeRequestor() {
 				url: '/req/async?op=list_requests&email=' + email,
 				datatype: 'json',
 				autowidth: true,
-				colNames: ['Requestor', 'Category', 'Subject', 'Submitted On'],
+				colNames: ['Id', 'Requestor', 'Category', 'Subject', 'Submitted On'],
 				colModel: [
+				    {name: 'id', visible: false}
 					{name: 'requestor'},
 					{name: 'category'},
 					{name: 'subject'},
